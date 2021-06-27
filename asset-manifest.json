@@ -1,27 +1,28 @@
 {
   "files": {
-    "main.css": "/hackthemountain2-scurvi/static/css/main.ca13d705.chunk.css",
-    "main.js": "/hackthemountain2-scurvi/static/js/main.a10684cc.chunk.js",
-    "main.js.map": "/hackthemountain2-scurvi/static/js/main.a10684cc.chunk.js.map",
-    "runtime-main.js": "/hackthemountain2-scurvi/static/js/runtime-main.27a95e47.js",
-    "runtime-main.js.map": "/hackthemountain2-scurvi/static/js/runtime-main.27a95e47.js.map",
-    "static/js/2.f1251369.chunk.js": "/hackthemountain2-scurvi/static/js/2.f1251369.chunk.js",
-    "static/js/2.f1251369.chunk.js.map": "/hackthemountain2-scurvi/static/js/2.f1251369.chunk.js.map",
-    "static/js/3.2ed9b97f.chunk.js": "/hackthemountain2-scurvi/static/js/3.2ed9b97f.chunk.js",
-    "static/js/3.2ed9b97f.chunk.js.map": "/hackthemountain2-scurvi/static/js/3.2ed9b97f.chunk.js.map",
+    "main.css": "/hackthemountain2-scurvi/static/css/main.c7649c38.chunk.css",
+    "main.js": "/hackthemountain2-scurvi/static/js/main.12a96fef.chunk.js",
+    "main.js.map": "/hackthemountain2-scurvi/static/js/main.12a96fef.chunk.js.map",
+    "runtime-main.js": "/hackthemountain2-scurvi/static/js/runtime-main.dcabe0a2.js",
+    "runtime-main.js.map": "/hackthemountain2-scurvi/static/js/runtime-main.dcabe0a2.js.map",
+    "static/js/2.65718ebf.chunk.js": "/hackthemountain2-scurvi/static/js/2.65718ebf.chunk.js",
+    "static/js/2.65718ebf.chunk.js.map": "/hackthemountain2-scurvi/static/js/2.65718ebf.chunk.js.map",
+    "static/js/3.94de8fa9.chunk.js": "/hackthemountain2-scurvi/static/js/3.94de8fa9.chunk.js",
+    "static/js/3.94de8fa9.chunk.js.map": "/hackthemountain2-scurvi/static/js/3.94de8fa9.chunk.js.map",
     "index.html": "/hackthemountain2-scurvi/index.html",
-    "static/css/main.ca13d705.chunk.css.map": "/hackthemountain2-scurvi/static/css/main.ca13d705.chunk.css.map",
-    "static/js/2.f1251369.chunk.js.LICENSE.txt": "/hackthemountain2-scurvi/static/js/2.f1251369.chunk.js.LICENSE.txt",
+    "static/css/main.c7649c38.chunk.css.map": "/hackthemountain2-scurvi/static/css/main.c7649c38.chunk.css.map",
+    "static/js/2.65718ebf.chunk.js.LICENSE.txt": "/hackthemountain2-scurvi/static/js/2.65718ebf.chunk.js.LICENSE.txt",
     "static/media/end pin.e7690e03.png": "/hackthemountain2-scurvi/static/media/end pin.e7690e03.png",
     "static/media/inbetween pin.c5bced5c.png": "/hackthemountain2-scurvi/static/media/inbetween pin.c5bced5c.png",
+    "static/media/scurvi boat.7c072f2b.png": "/hackthemountain2-scurvi/static/media/scurvi boat.7c072f2b.png",
     "static/media/WorldMap.css": "/hackthemountain2-scurvi/static/media/scurvi map.c5d28844.png",
     "static/media/scurvy logo.11302995.png": "/hackthemountain2-scurvi/static/media/scurvy logo.11302995.png",
     "static/media/start pin.e90f391f.png": "/hackthemountain2-scurvi/static/media/start pin.e90f391f.png"
   },
   "entrypoints": [
-    "static/js/runtime-main.27a95e47.js",
-    "static/js/2.f1251369.chunk.js",
-    "static/css/main.ca13d705.chunk.css",
-    "static/js/main.a10684cc.chunk.js"
+    "static/js/runtime-main.dcabe0a2.js",
+    "static/js/2.65718ebf.chunk.js",
+    "static/css/main.c7649c38.chunk.css",
+    "static/js/main.12a96fef.chunk.js"
   ]
 }
