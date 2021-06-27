@@ -1,11 +1,15 @@
-import React from "react";
+import React, {HTMLAttributes} from "react";
 import {BoatBase, BoatSpeeds} from "../Ships"
 import barquentine from "../images/barquentine.png"
 import frigate from "../images/frigate.png"
 import rowboat from "../images/rowboat.png"
 
-export default class Boat extends React.Component<BoatBase, any> {
-  constructor(props: BoatBase) {
+interface ClickEventHandler {
+  clickEventHandler: (speed: number) => void
+}
+
+export default class Boat extends React.Component<BoatBase & ClickEventHandler, any> {
+  constructor(props: BoatBase & ClickEventHandler) {
     super(props)
   }
 
@@ -23,11 +27,14 @@ export default class Boat extends React.Component<BoatBase, any> {
 
   render = () => {
     return (
-      <div>
-        {this.props.sprite}
-        speed: {this.props.speed} knots
-        <img src={this.image(this.props.sprite)} alt={this.props.sprite} title={this.props.sprite}/>
-      </div>
+      <button onClick={(e) => this.props.clickEventHandler(this.props.speed)}>
+        <img
+          className="icon-large"
+          src={this.image(this.props.sprite)}
+          alt={this.props.sprite}
+          title={`${this.props.sprite} - speed: ${this.props.speed} knots`}
+        />
+      </button>
     )
   }
 }

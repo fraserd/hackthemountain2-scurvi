@@ -1,0 +1,9 @@
+.horizontal {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.horizontal div {
+     display: inline-flex;
+ }

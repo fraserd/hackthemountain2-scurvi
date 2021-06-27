@@ -1,4 +1,5 @@
 import React from "react";
+import "./List.css"
 
 interface ListItemProperties<T> {
   item: T
@@ -8,6 +9,7 @@ interface ListItemProperties<T> {
 interface ListProperties<T> {
   items: T[]
   factory: (item: T) => JSX.Element
+  horizontal?: boolean
 }
 
 class ListItem<T> extends React.Component<ListItemProperties<T>, any> {
@@ -35,10 +37,12 @@ export default class List<T> extends React.Component<ListProperties<T>, any> {
       listItems.push(<ListItem item={item} factory={this.props.factory}/>)
     }
 
+    let className = this.props.horizontal ? "horizontal" : ""
+
     return (
-      <ul>
+      <div className={className}>
         {listItems}
-      </ul>
+      </div>
     )
   }
 }

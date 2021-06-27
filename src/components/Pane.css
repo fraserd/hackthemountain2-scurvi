@@ -1,0 +1,15 @@
+.pane {
+    background: #ffffffcc;
+}
+
+.pane.fixed {
+    position: absolute;
+}
+
+.pane.floating {
+    position: center;
+}
+
+.pane.transparent {
+    background-color: transparent;
+}

@@ -1,13 +1,18 @@
 import React from 'react'
+import "./Logo.css"
 import logo from "../images/scurvy logo.png"
 
-export default class Logo extends React.Component<any, any> {
-  constructor(props: any) {
+interface LogoProperties {
+  small?: boolean
+}
+
+export default class Logo extends React.Component<LogoProperties, any> {
+  constructor(props: LogoProperties) {
     super(props);
   }
   render = () => {
     return (
-      <img src={logo} alt="scurvi logo"/>
+      <img className={this.props.small ? "small" : ""} src={logo} alt="scurvi logo"/>
     )
   }
 }
