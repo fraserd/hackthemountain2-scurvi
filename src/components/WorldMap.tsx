@@ -1,10 +1,17 @@
 import React from 'react'
 import './WorldMap.css'
 
-export default function WorldMap(props: any /* TODO: find a better type */) {
-  return (
-    <div className="worldMap">
-      {props.children}
-    </div>
-  )
+export default class WorldMap extends React.Component {
+  constructor(props: any) {
+    super(props);
+  }
+
+  render() {
+    return (
+      <div className="worldMap">
+        {this.props.children}
+      </div>
+    )
+  }
+
 }
