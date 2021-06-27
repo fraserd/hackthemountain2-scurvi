@@ -1,33 +1,37 @@
 enum BoatSpeeds {
   RowBoat = 2, // knows
   Frigate = 12, // knots
-  Barquentine = 16// knots
+  Barquentine = 16 // knots
 }
 
-class Boat {
+class BoatBase {
+  type: BoatSpeeds
   speed: number
+  sprite: keyof typeof BoatSpeeds
 
-  constructor(speed: number) {
+  constructor(type: BoatSpeeds, speed: number, sprite: keyof typeof BoatSpeeds) {
+    this.type = type
     this.speed = speed
+    this.sprite = sprite
   }
 }
 
-class Barquentine extends Boat {
+class Barquentine extends BoatBase {
   constructor() {
-    super(BoatSpeeds.Barquentine);
+    super(BoatSpeeds.Barquentine, BoatSpeeds.Barquentine, "Barquentine")
   }
 }
 
-class Frigate extends Boat {
+class Frigate extends BoatBase {
   constructor() {
-    super(BoatSpeeds.Frigate);
+    super(BoatSpeeds.Frigate, BoatSpeeds.Frigate, "Frigate")
   }
 }
 
-class RowBoat extends Boat {
+class RowBoat extends BoatBase {
   constructor() {
-    super(BoatSpeeds.RowBoat);
+    super(BoatSpeeds.RowBoat, BoatSpeeds.RowBoat, "RowBoat")
   }
 }
 
-export type { Boat, Barquentine, Frigate, RowBoat, BoatSpeeds }
+export { BoatBase, Barquentine, Frigate, RowBoat, BoatSpeeds }
