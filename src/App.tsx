@@ -54,6 +54,9 @@ class App extends React.Component<any, AppState> {
         return (
           <div className="App">
             <WorldMap>
+              <Pane top={0} left={0} width={100} height={40} transparent>
+                <Logo small/>
+              </Pane>
               <PinMap/>
             </WorldMap>
           </div>
