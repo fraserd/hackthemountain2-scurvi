@@ -5,6 +5,7 @@ import Logo from "./components/Logo"
 import SetSail from "./components/SetSail"
 import Page from "./Page";
 import BoatSelection from "./components/BoatSelection";
+import PinMap from "./components/PinMap"
 
 interface AppState {
   page: Page
@@ -42,7 +43,13 @@ class App extends React.Component<any, AppState> {
           </div>
         )
       case Page.RouteSelection:
-        /* TODO: write the route selection page return statement */
+        return (
+		  <div className="App">
+			<WorldMap>
+				<PinMap />
+			</WorldMap>
+		  </div>
+		)
         break;
       case Page.Results:
         /* TODO: write the results page return statement */
