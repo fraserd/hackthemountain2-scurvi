@@ -1,0 +1,26 @@
+.setSail {
+    height: 10vh;
+    min-height: 22vh;
+    width: 40vw;
+    color: #00c4ff;
+    font-weight: 75;
+    font-size: 40px;
+    background: #ffffffcc;
+
+    display: flex;
+    flex-direction: row;
+    padding: 10px 0;
+}
+
+.ampersand {
+    height: 20vh;
+}
+
+.cell {
+    width: 30%;
+}
+
+.centre {
+    text-align: center;
+    alignment: center;
+}
