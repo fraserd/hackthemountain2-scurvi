@@ -1,6 +1,7 @@
 enum Page {
   Title,
-  Input,
+  BoatSelection,
+  RouteSelection,
   Results
 }
 

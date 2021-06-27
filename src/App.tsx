@@ -4,6 +4,7 @@ import WorldMap from "./components/WorldMap"
 import Logo from "./components/Logo"
 import SetSail from "./components/SetSail"
 import Page from "./Page";
+import BoatSelection from "./components/BoatSelection";
 
 interface AppState {
   page: Page
@@ -32,8 +33,16 @@ class App extends React.Component<any, AppState> {
             </WorldMap>
           </div>
         )
-      case Page.Input:
-        /* TODO: write the input page return statement */
+      case Page.BoatSelection:
+        return (
+          <div className="App">
+            <WorldMap>
+              <BoatSelection appStateSetter={this.setPage}/>
+            </WorldMap>
+          </div>
+        )
+      case Page.RouteSelection:
+        /* TODO: write the route selection page return statement */
         break;
       case Page.Results:
         /* TODO: write the results page return statement */
