@@ -1,5 +1,5 @@
 import React from 'react'
-import logo from "./scurvy logo.png"
+import logo from "../images/scurvy logo.png"
 
 export default function Logo() {
   return (

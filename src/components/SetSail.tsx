@@ -1,5 +1,5 @@
 import React from 'react'
-import ampersand from "./ampersand.png"
+import ampersand from "../images/ampersand.png"
 import './SetSail.css'
 
 export default function SetSail() {

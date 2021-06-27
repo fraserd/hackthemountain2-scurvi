@@ -1,9 +1,9 @@
-import React from 'react';
+import React from 'react'
 
-function boatSelection(props) {
+function boatSelection(props: any) {
     return (
         <div></div>
-    );
-};
+    )
+}
 
-export default boatSelection;
+export default boatSelection
