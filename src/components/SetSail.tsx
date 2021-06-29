@@ -2,9 +2,9 @@ import React from 'react'
 import ampersand from "../images/ampersand.png"
 import './SetSail.css'
 import Page from "../Page"
-import {AppStateSetter} from "../Interfaces"
+import {AppStateAccessor} from "../Interfaces"
 
-interface SetSailProperties extends AppStateSetter {}
+interface SetSailProperties extends AppStateAccessor {}
 
 export default class SetSail extends React.Component<SetSailProperties, any> {
   constructor(props: SetSailProperties) {
@@ -12,7 +12,7 @@ export default class SetSail extends React.Component<SetSailProperties, any> {
   }
 
   setSail = (p1: React.MouseEvent<HTMLDivElement>) => {
-    this.props.appStateSetter(Page.BoatSelection)
+    this.props.appStateSetter(Page.BoatSelection, this.props.appStateGetter().data)
   }
 
   render = () => {

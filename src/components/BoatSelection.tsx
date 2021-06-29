@@ -1,12 +1,12 @@
 import React from 'react'
-import {AppStateSetter} from "../Interfaces";
+import {AppStateAccessor} from "../Interfaces";
 import {Barquentine, BoatBase, Frigate, RowBoat} from "../Ships";
 import List from "./List";
 import Boat from "./Boat";
 import Page from "../Page";
 import scurviBoat from "../images/scurvi boat.png"
 
-interface BoatSelectionProperties extends AppStateSetter {
+interface BoatSelectionProperties extends AppStateAccessor {
 }
 
 interface BoatSelectionState {
@@ -37,7 +37,10 @@ class BoatSelection extends React.Component<BoatSelectionProperties, BoatSelecti
       <div>
         <p>Enter typical travel rate in knots</p>
         <input value={this.state.speed} onChange={e => this.setState({ speed: parseInt(e.target.value) })}/>
-        <button disabled={this.state.speed == undefined || this.state.speed <= 0} onClick={() => this.props.appStateSetter(Page.RouteSelection)}>
+        <button
+          disabled={this.state.speed == undefined || this.state.speed <= 0}
+          onClick={() => this.props.appStateSetter(Page.RouteSelection,{...this.props.appStateGetter().data, ...{speed: this.state.speed ?? 0}}  )}
+        >
           <img className="icon" src={scurviBoat} alt="scurvi boat"/>
         </button>
         <p>or</p>

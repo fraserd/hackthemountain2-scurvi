@@ -7,22 +7,22 @@ import Page from "./Page";
 import BoatSelection from "./components/BoatSelection";
 import PinMap from "./components/PinMap"
 import Pane from "./components/Pane";
-
-interface AppState {
-  page: Page
-}
+import {AppState, AppData} from "./Interfaces";
 
 class App extends React.Component<any, AppState> {
   constructor(props: any) {
     super(props)
     this.state = {
-      page: Page.Title
+      page: Page.Title,
+      data: { speed: 0, pinData: [], results: {} }
     }
   }
 
-  setPage = (page: Page) => {
-    this.setState({ page: page })
+  setAppData = (page: Page, data: AppData) => {
+    this.setState({ page: page, data: data })
   }
+
+  getAppData = (): AppState => this.state
 
   render = () => {
     switch(this.state.page) {
@@ -32,7 +32,7 @@ class App extends React.Component<any, AppState> {
             <WorldMap>
               <Logo/>
               <Pane width={345} height={140}>
-                <SetSail appStateSetter={this.setPage}/>
+                <SetSail appStateSetter={this.setAppData} appStateGetter={this.getAppData}/>
               </Pane>
             </WorldMap>
           </div>
@@ -45,7 +45,7 @@ class App extends React.Component<any, AppState> {
                 <Logo small/>
               </Pane>
               <Pane width={600} height={400}>
-                <BoatSelection appStateSetter={this.setPage}/>
+                <BoatSelection appStateSetter={this.setAppData} appStateGetter={this.getAppData}/>
               </Pane>
             </WorldMap>
           </div>
