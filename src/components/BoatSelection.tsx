@@ -28,7 +28,6 @@ class BoatSelection extends React.Component<BoatSelectionProperties, BoatSelecti
         speed={boat.speed}
         type={boat.type}
         sprite={boat.sprite}
-        key={boat.type}
         clickEventHandler={(speed) => this.setState({ speed: speed })}/>
   }
 
@@ -39,7 +38,7 @@ class BoatSelection extends React.Component<BoatSelectionProperties, BoatSelecti
         <input value={this.state.speed} onChange={e => this.setState({ speed: parseInt(e.target.value) })}/>
         <button
           disabled={this.state.speed == undefined || this.state.speed <= 0}
-          onClick={() => this.props.appStateSetter(Page.RouteSelection,{...this.props.appStateGetter().data, ...{speed: this.state.speed ?? 0}}  )}
+          onClick={() => this.props.appStateSetter(Page.RouteSelection, {...this.props.appStateGetter().data, ...{speed: this.state.speed ?? 0}}  )}
         >
           <img className="icon" src={scurviBoat} alt="scurvi boat"/>
         </button>

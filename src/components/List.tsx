@@ -17,13 +17,7 @@ class ListItem<T> extends React.Component<ListItemProperties<T>, any> {
     super(props);
   }
 
-  render = () => {
-    return (
-      <div>
-        {this.props.factory(this.props.item)}
-      </div>
-    )
-  }
+  render = () => this.props.factory(this.props.item)
 }
 
 export default class List<T> extends React.Component<ListProperties<T>, any> {
@@ -33,8 +27,9 @@ export default class List<T> extends React.Component<ListProperties<T>, any> {
 
   render = () => {
     let listItems: JSX.Element[] = [];
+    let i: number = 1
     for (const item of this.props.items) {
-      listItems.push(<ListItem item={item} factory={this.props.factory}/>)
+      listItems.push(<ListItem key={i++} item={item} factory={this.props.factory}/>)
     }
 
     let className = this.props.horizontal ? "horizontal" : ""
