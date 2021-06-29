@@ -5,7 +5,7 @@ import Logo from "./components/Logo"
 import SetSail from "./components/SetSail"
 import Page from "./Page";
 import BoatSelection from "./components/BoatSelection";
-import PinMap from "./components/PinMap"
+import {PinMap} from "./components/PinMap"
 import Pane from "./components/Pane";
 import {AppState, AppData} from "./Interfaces";
 

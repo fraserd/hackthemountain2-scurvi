@@ -26,65 +26,62 @@ interface Coordinate {
 	y: number;
 }
 
-function calculateDistance(c1: Coordinate, c2: Coordinate) {
-	let a = c1.x - c2.x;
-	let b = c1.y - c2.y;
+class TravelersMathHelper {
 
-	return Math.sqrt((a*a) + (b*b));
-}
+	static calculateDistance = (c1: Coordinate, c2: Coordinate) => {
+		let a = c1.x - c2.x;
+		let b = c1.y - c2.y;
 
-// knots to kilometers per hour
-function knot2kph(knot: number) {
-	return knot * 1.852;
-}
+		return Math.sqrt((a*a) + (b*b));
+	}
+
+	// knots to kilometers per hour
+	static knot2kph = (knot: number) => knot * 1.852
 
 
-function calculateTimeHours(km: number, knots: number) {
-	let kph = knot2kph(knots);
+	static calculateTimeHours = (km: number, knots: number) => {
+		let kph = TravelersMathHelper.knot2kph(knots);
 
-	return km / kph;
-}
+		return km / kph;
+	}
 
-/*
-- humans require an average of 82.5mg of vitamin c per day but there is no real upper limit
-- 1 100g orange = 53.2mg
-- 1 100g lemon = 53mg
-- 1 100g lime = 29.1mg
-Frigate = 12 knots
-Barquentine = 16 knots
-Row boat = 2 knots
-*/
-function doYouGetScurvy(distance_km: number, boat_speed_knots: number, total_vit_c_milligrams: number) {
+	/*
+  - humans require an average of 82.5mg of vitamin c per day but there is no real upper limit
+  - 1 100g orange = 53.2mg
+  - 1 100g lemon = 53mg
+  - 1 100g lime = 29.1mg
+  Frigate = 12 knots
+  Barquentine = 16 knots
+  Row boat = 2 knots
+  */
+	static doYouGetScurvy = (distance_km: number, boat_speed_knots: number, total_vit_c_milligrams: number) => {
 
-	const hours = calculateTimeHours(distance_km, boat_speed_knots);
-	const days = hours / 24;
+		const hours = TravelersMathHelper.calculateTimeHours(distance_km, boat_speed_knots);
+		const days = hours / 24;
 
-	const daily_vit_c_requirement = 82.5;	// milligrams
+		const daily_vit_c_requirement = 82.5;	// milligrams
 
-	const total_vit_c_requirement = days * daily_vit_c_requirement;
+		const total_vit_c_requirement = days * daily_vit_c_requirement;
 
-	if (total_vit_c_requirement <= total_vit_c_milligrams) {
-		console.log("Arr, yer crew won't get scurvy.");
-	} else {
-		const delta = total_vit_c_requirement - total_vit_c_milligrams;
-
-		if (delta <= (30 * daily_vit_c_requirement)) {
-			console.log("Arr, you are malnurished but you won't see signs of scurvy.");
-		} else if (delta <= (3 * 30 * daily_vit_c_requirement)) {
-			console.log("Arr, your gums will bleed but you will likely live. Go eat an orange when you get ashore.");
+		if (total_vit_c_requirement <= total_vit_c_milligrams) {
+			console.log("Arr, yer crew won't get scurvy.");
 		} else {
-			console.log("Yar, you're done for.");
+			const delta = total_vit_c_requirement - total_vit_c_milligrams;
+
+			if (delta <= (30 * daily_vit_c_requirement)) {
+				console.log("Arr, you are malnurished but you won't see signs of scurvy.");
+			} else if (delta <= (3 * 30 * daily_vit_c_requirement)) {
+				console.log("Arr, your gums will bleed but you will likely live. Go eat an orange when you get ashore.");
+			} else {
+				console.log("Yar, you're done for.");
+			}
 		}
 	}
 }
 
+export interface PinMapProp {}
 
-
-export default interface PinMapProp {
-}
-
-
-export default class PinMap extends React.Component {
+export class PinMap extends React.Component<PinMapProp, any> {
 	private canvasRef = React.createRef<HTMLCanvasElement>();
 	private startPin? : Coordinate = undefined;
 	private middlePin? : Coordinate = undefined;
@@ -92,35 +89,28 @@ export default class PinMap extends React.Component {
 
 	constructor(props: PinMapProp) {
 		super(props);
-
-		this.placePin = this.placePin.bind(this);
-		this.calculateTotalDistance = this.calculateTotalDistance.bind(this);
-		this.handleClick = this.handleClick.bind(this);
-		this.getPins = this.getPins.bind(this);
 	}
 
-	getPins() {
-		return [ this.startPin, this.middlePin, this.endPin ];
-	}
+	getPins = () => [this.startPin, this.middlePin, this.endPin]
 
-	handleClick(event: MouseEvent) {
+	handleClick = (event: MouseEvent) => {
 		const coord : Coordinate = {x: event.clientX, y: event.clientY};
 
 		this.placePin(coord);
 	}
 
-	calculateTotalDistance() {
+	calculateTotalDistance = () => {
 		if (!this.startPin || !this.middlePin || !this.endPin) {
 			throw new Error("Can't calculate route distance unless all 3 pins are placed");
 		}
 
-		let distance = calculateDistance(this.startPin, this.middlePin);
-		distance += calculateDistance(this.middlePin, this.endPin);
+		let distance = TravelersMathHelper.calculateDistance(this.startPin, this.middlePin);
+		distance += TravelersMathHelper.calculateDistance(this.middlePin, this.endPin);
 
 		return distance;
 	}
 
-	placePin(coord: Coordinate) {
+	placePin = (coord: Coordinate) => {
 		let pinImageSrc : string;
 
 		const scaleFactor = 22;
@@ -148,16 +138,14 @@ export default class PinMap extends React.Component {
 			console.log("distance: ", totalDistance);
 			console.log("boat type: frigate");
 			console.log("orangeCount:", orangeCount);
-			doYouGetScurvy(totalDistance, frigateKnots, totalVitC);
+			TravelersMathHelper.doYouGetScurvy(totalDistance, frigateKnots, totalVitC);
 
 			return;	// Done adding pins.
 		}
 
 		let current = this.canvasRef.current;
 		if (!current)
-		{
 			return;
-		}
 
 		let context = current.getContext('2d');
 		let pinImage = new Image();
@@ -179,16 +167,12 @@ export default class PinMap extends React.Component {
 		}
 	}
 
-	render() {
+	render = () => {
 		let w = document.body.clientWidth;
 		let h = document.body.clientHeight;
 
 		return (
-			<canvas id="pinMapCanvas" width={w} height={h} ref={this.canvasRef} onClick={this.handleClick}></canvas>
+			<canvas id="pinMapCanvas" width={w} height={h} ref={this.canvasRef} onClick={this.handleClick}/>
 		);
 	}
 }
-
-
-
-
