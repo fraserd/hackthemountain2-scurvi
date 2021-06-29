@@ -19,26 +19,31 @@ class BoatSelection extends React.Component<BoatSelectionProperties, BoatSelecti
     this.state = { }
   }
 
-  boats = () => {
-    return [new RowBoat(), new Frigate(), new Barquentine()]
-  }
+  boats = () => [new RowBoat(), new Frigate(), new Barquentine()]
 
-  factory = (boat: BoatBase): JSX.Element => {
-      return <Boat
-        speed={boat.speed}
-        type={boat.type}
-        sprite={boat.sprite}
-        clickEventHandler={(speed) => this.setState({ speed: speed })}/>
-  }
+  factory = (boat: BoatBase): JSX.Element =>
+    <Boat
+      speed={boat.speed}
+      type={boat.type}
+      sprite={boat.sprite}
+      clickEventHandler={(speed) => this.setState({speed: speed})}/>
 
   render = () => {
+    let hasValue: boolean = false, speed: number, speedString: string = ''
+    if (this.state.speed !== undefined && this.state.speed > 0)
+    {
+      hasValue = true
+      speed = this.state.speed
+      speedString = `${speed}`
+    }
+
     return (
       <div>
         <p>Enter typical travel rate in knots</p>
-        <input value={this.state.speed} onChange={e => this.setState({ speed: parseInt(e.target.value) })}/>
+        <input value={speedString} onChange={e => this.setState({ speed: parseInt(e.target.value) })}/>
         <button
-          disabled={this.state.speed == undefined || this.state.speed <= 0}
-          onClick={() => this.props.appStateSetter(Page.RouteSelection, {...this.props.appStateGetter().data, ...{speed: this.state.speed ?? 0}}  )}
+          disabled={!hasValue}
+          onClick={() => this.props.appStateSetter(Page.RouteSelection, {...this.props.appStateGetter().data, ...{speed: speed}}  )}
         >
           <img className="icon" src={scurviBoat} alt="scurvi boat"/>
         </button>
