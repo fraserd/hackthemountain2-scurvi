@@ -13,6 +13,34 @@
   }
 }
 
+.font-main {
+  font-weight: 75;
+  font-size: 40px;
+}
+
+.font-smaller {
+  font-weight: 75;
+  font-size: 25px;
+}
+
+.citrus-navy {
+  color: #00137F;
+}
+
+.citrus-blue {
+  color: #77B0FF;
+}
+
+.icon {
+  height: 20px;
+  width: 20px;
+}
+
+.icon-large {
+  height: 65px;
+  width: 65px;
+}
+
 .App-header {
   background-color: #282c34;
   min-height: 100vh;

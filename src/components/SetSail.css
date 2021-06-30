@@ -1,0 +1,18 @@
+.setSail {
+    display: flex;
+    flex-direction: row;
+    padding: 10px 0;
+}
+
+.ampersand {
+    height: 20vh;
+}
+
+.cell {
+    width: 30%;
+}
+
+.centre {
+    text-align: center;
+    alignment: center;
+}
