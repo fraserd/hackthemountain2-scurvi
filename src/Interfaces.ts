@@ -11,14 +11,27 @@ interface AppData {
   results: ResultSet // some set of data w.r.t. the final results
 }
 
-// TODO: add properties to the pin interface, as required, to represent one pin placement
-interface Pin {
-
+interface Coordinate {
+    x: number
+    y: number
 }
 
-// TODO: add properties to the result set, as required, to collect data about the results
-interface ResultSet {
+enum PinType {
+    Start,
+    Middle,
+    End
+}
 
+interface Pin {
+    coord: Coordinate
+    type: PinType
+}
+
+interface ResultSet {
+    days: number
+    limes: number
+    lemons: number
+    oranges: number
 }
 
 interface AppStateAccessor {
@@ -26,4 +39,5 @@ interface AppStateAccessor {
   appStateGetter: () => AppState
 }
 
-export type { AppState, AppStateAccessor, AppData, Pin, ResultSet }
+export type { AppState, AppStateAccessor, AppData, Pin, ResultSet, Coordinate }
+export { PinType }

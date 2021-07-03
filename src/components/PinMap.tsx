@@ -3,32 +3,12 @@ import './PinMap.css';
 import startPinImport from "../images/start pin.png"
 import middlePinImport from "../images/inbetween pin.png"
 import endPinImport from "../images/end pin.png"
-
-
-interface ButtonProp {
-	text: string;
-	handleClick : React.MouseEventHandler<HTMLButtonElement>;
-}
-
-function Button(props: ButtonProp)
-{
-	return (
-		<button type="button"
-				id="doneButton"
-				onClick={props.handleClick}>
-			{props.text}
-		</button>
-	);
-}
-
-interface Coordinate {
-	x: number;
-	y: number;
-}
+import {AppStateAccessor, PinType, Pin, ResultSet, Coordinate} from "../Interfaces"
+import Page from "../Page";
 
 class TravelersMathHelper {
 
-	static calculateDistance = (c1: Coordinate, c2: Coordinate) => {
+	static distance = (c1: Coordinate, c2: Coordinate) => {
 		let a = c1.x - c2.x;
 		let b = c1.y - c2.y;
 
@@ -36,50 +16,10 @@ class TravelersMathHelper {
 	}
 
 	// knots to kilometers per hour
-	static knot2kph = (knot: number) => knot * 1.852
-
-
-	static calculateTimeHours = (km: number, knots: number) => {
-		let kph = TravelersMathHelper.knot2kph(knots);
-
-		return km / kph;
-	}
-
-	/*
-  - humans require an average of 82.5mg of vitamin c per day but there is no real upper limit
-  - 1 100g orange = 53.2mg
-  - 1 100g lemon = 53mg
-  - 1 100g lime = 29.1mg
-  Frigate = 12 knots
-  Barquentine = 16 knots
-  Row boat = 2 knots
-  */
-	static doYouGetScurvy = (distance_km: number, boat_speed_knots: number, total_vit_c_milligrams: number) => {
-
-		const hours = TravelersMathHelper.calculateTimeHours(distance_km, boat_speed_knots);
-		const days = hours / 24;
-
-		const daily_vit_c_requirement = 82.5;	// milligrams
-
-		const total_vit_c_requirement = days * daily_vit_c_requirement;
-
-		if (total_vit_c_requirement <= total_vit_c_milligrams) {
-			console.log("Arr, yer crew won't get scurvy.");
-		} else {
-			const delta = total_vit_c_requirement - total_vit_c_milligrams;
-
-			if (delta <= (30 * daily_vit_c_requirement)) {
-				console.log("Arr, you are malnurished but you won't see signs of scurvy.");
-			} else if (delta <= (3 * 30 * daily_vit_c_requirement)) {
-				console.log("Arr, your gums will bleed but you will likely live. Go eat an orange when you get ashore.");
-			} else {
-				console.log("Yar, you're done for.");
-			}
-		}
-	}
+	static knots2kph = (knots: number) => knots * 1.852
 }
 
-export interface PinMapProp {}
+export interface PinMapProp extends AppStateAccessor {}
 
 export class PinMap extends React.Component<PinMapProp, any> {
 	private canvasRef = React.createRef<HTMLCanvasElement>();
@@ -87,27 +27,57 @@ export class PinMap extends React.Component<PinMapProp, any> {
 	private middlePin? : Coordinate = undefined;
 	private endPin? : Coordinate = undefined;
 
-	constructor(props: PinMapProp) {
-		super(props);
-	}
-
-	getPins = () => [this.startPin, this.middlePin, this.endPin]
-
 	handleClick = (event: MouseEvent) => {
-		const coord : Coordinate = {x: event.clientX, y: event.clientY};
+		const c : Coordinate = {x: event.clientX, y: event.clientY};
 
-		this.placePin(coord);
+		this.placePin(c);
 	}
 
 	calculateTotalDistance = () => {
 		if (!this.startPin || !this.middlePin || !this.endPin) {
-			throw new Error("Can't calculate route distance unless all 3 pins are placed");
+			throw new Error("Can't calculate route distance unless all 3 pins are placed.");
 		}
 
-		let distance = TravelersMathHelper.calculateDistance(this.startPin, this.middlePin);
-		distance += TravelersMathHelper.calculateDistance(this.middlePin, this.endPin);
+		let distance = TravelersMathHelper.distance(this.startPin, this.middlePin);
+		distance += TravelersMathHelper.distance(this.middlePin, this.endPin);
 
 		return distance;
+	}
+
+	transitionToResults = () => {
+		if (!this.startPin || !this.middlePin || !this.endPin) {
+			throw new Error("Can't transition to results unless all 3 pins are placed.");
+		}
+
+		let pins : Pin[] = [
+			{ coord: this.startPin, type: PinType.Start },
+			{ coord: this.middlePin, type: PinType.Middle },
+			{ coord: this.endPin, type: PinType.End },
+		];
+
+		const distance_km = this.calculateTotalDistance();
+		const speed_kph = TravelersMathHelper.knots2kph(this.props.appStateGetter().data.speed);
+		const hours = distance_km / speed_kph;
+		const days = Math.ceil(hours / 24);
+		const daily_vitamin_c_requirement_mg = 82.5;
+		const trip_vitamin_c_mg = days * daily_vitamin_c_requirement_mg;
+
+		// Vitamin C in mg per 100mg
+		// Source: `Foods and their Vitamin C content per 100 grams` https://en.wikipedia.org/wiki/Scurvy
+		enum VitaminC_mg {
+			Orange = 53.2,
+			Lemon = 53,
+			Lime = 29.1,
+		}
+
+		let results : ResultSet = {
+			days: days,
+			limes: Math.ceil(trip_vitamin_c_mg / VitaminC_mg.Lime),
+			lemons: Math.ceil(trip_vitamin_c_mg / VitaminC_mg.Lemon),
+			oranges: Math.ceil(trip_vitamin_c_mg / VitaminC_mg.Orange)
+		};
+
+		this.props.appStateSetter(Page.Results, { ...this.props.appStateGetter().data, pinData: pins, results: results });
 	}
 
 	placePin = (coord: Coordinate) => {
@@ -127,20 +97,8 @@ export class PinMap extends React.Component<PinMapProp, any> {
 			this.endPin = scaledCoord;
 			pinImageSrc = endPinImport;
 		} else {
-			let totalDistance = this.calculateTotalDistance();
-
-			const frigateKnots = 12;
-			const orangeCount = 100;
-			const orangeVitC = 53.2; // mg
-
-			const totalVitC = orangeCount * orangeVitC;
-
-			console.log("distance: ", totalDistance);
-			console.log("boat type: frigate");
-			console.log("orangeCount:", orangeCount);
-			TravelersMathHelper.doYouGetScurvy(totalDistance, frigateKnots, totalVitC);
-
-			return;	// Done adding pins.
+			this.transitionToResults();
+			return;
 		}
 
 		let current = this.canvasRef.current;
