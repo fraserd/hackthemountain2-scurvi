@@ -1,8 +1,6 @@
 #TripResults {
   background-color: white;
   opacity: 80%;
+  border-radius: 10px;
+  padding: 2rem;
 }
-
-
-
-

@@ -1,5 +1,6 @@
 .pane {
     background: #ffffffcc;
+    border-radius: 10px;
 }
 
 .pane.fixed {

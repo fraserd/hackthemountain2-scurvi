@@ -81,7 +81,7 @@ class App extends React.Component<any, AppState> {
                   <Logo small/>
                 </Pane>
                 <PinResults appStateSetter={this.setAppData} appStateGetter={this.getAppData} pins={this.state.data.pinData} />
-                <Pane top={100} left={100} width={180} height={210} transparent>
+                <Pane top={300} left={600} width={600} height={400} transparent>
                   <TripResults days={results.days} limes={results.limes} lemons={results.lemons} oranges={results.oranges} />
                 </Pane>
               </WorldMap>
