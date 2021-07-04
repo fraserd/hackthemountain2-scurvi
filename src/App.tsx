@@ -9,6 +9,7 @@ import {PinMap} from "./components/PinMap"
 import Pane from "./components/Pane";
 import TripResults from "./components/TripResults"
 import {AppState, AppData} from "./Interfaces";
+import {PinResults} from "./components/PinResults";
 
 class App extends React.Component<any, AppState> {
   constructor(props: any) {
@@ -72,7 +73,6 @@ class App extends React.Component<any, AppState> {
           </div>
         )
       case Page.Results:
-        /* TODO Rerender placed pins */
         const results = this.state.data.results;
         return (
             <div className="App">
@@ -80,7 +80,10 @@ class App extends React.Component<any, AppState> {
                 <Pane top={0} left={0} width={100} height={40} transparent>
                   <Logo small/>
                 </Pane>
-                <TripResults days={results.days} limes={results.limes} lemons={results.lemons} oranges={results.oranges} />
+                <PinResults appStateSetter={this.setAppData} appStateGetter={this.getAppData} pins={this.state.data.pinData} />
+                <Pane top={100} left={100} width={180} height={210} transparent>
+                  <TripResults days={results.days} limes={results.limes} lemons={results.lemons} oranges={results.oranges} />
+                </Pane>
               </WorldMap>
             </div>
         )

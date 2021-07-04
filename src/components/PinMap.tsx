@@ -5,6 +5,7 @@ import middlePinImport from "../images/inbetween pin.png"
 import endPinImport from "../images/end pin.png"
 import {AppStateAccessor, PinType, Pin, ResultSet, Coordinate} from "../Interfaces"
 import Page from "../Page";
+import CanvasUtil from "../CanvasUtil";
 
 class TravelersMathHelper {
 
@@ -19,13 +20,18 @@ class TravelersMathHelper {
 	static knots2kph = (knots: number) => knots * 1.852
 }
 
+interface CoordinatePair {
+	screen_coord: Coordinate,
+	km_coord: Coordinate
+}
+
 export interface PinMapProp extends AppStateAccessor {}
 
 export class PinMap extends React.Component<PinMapProp, any> {
 	private canvasRef = React.createRef<HTMLCanvasElement>();
-	private startPin? : Coordinate = undefined;
-	private middlePin? : Coordinate = undefined;
-	private endPin? : Coordinate = undefined;
+	private startPin? : CoordinatePair = undefined;
+	private middlePin? : CoordinatePair = undefined;
+	private endPin? : CoordinatePair = undefined;
 
 	handleClick = (event: MouseEvent) => {
 		const c : Coordinate = {x: event.clientX, y: event.clientY};
@@ -38,8 +44,8 @@ export class PinMap extends React.Component<PinMapProp, any> {
 			throw new Error("Can't calculate route distance unless all 3 pins are placed.");
 		}
 
-		let distance = TravelersMathHelper.distance(this.startPin, this.middlePin);
-		distance += TravelersMathHelper.distance(this.middlePin, this.endPin);
+		let distance = TravelersMathHelper.distance(this.startPin.screen_coord, this.middlePin.screen_coord);
+		distance += TravelersMathHelper.distance(this.middlePin.screen_coord, this.endPin.screen_coord);
 
 		return distance;
 	}
@@ -50,9 +56,9 @@ export class PinMap extends React.Component<PinMapProp, any> {
 		}
 
 		let pins : Pin[] = [
-			{ coord: this.startPin, type: PinType.Start },
-			{ coord: this.middlePin, type: PinType.Middle },
-			{ coord: this.endPin, type: PinType.End },
+			{ coord: this.startPin.km_coord, type: PinType.Start },
+			{ coord: this.middlePin.km_coord, type: PinType.Middle },
+			{ coord: this.endPin.km_coord, type: PinType.End },
 		];
 
 		const distance_km = this.calculateTotalDistance();
@@ -83,18 +89,19 @@ export class PinMap extends React.Component<PinMapProp, any> {
 	placePin = (coord: Coordinate) => {
 		let pinImageSrc : string;
 
-		const scaleFactor = 22;
-		const scaledCoord : Coordinate = {x : coord.x * scaleFactor, y : coord.y * scaleFactor };
+		const scaleFactor = 22;	// TODO Dynamic scaling and resize events.
+		const screenCoord : Coordinate = {x : coord.x * scaleFactor, y : coord.y * scaleFactor };
+		const coordinatePair : CoordinatePair = { km_coord: coord, screen_coord: screenCoord };
 
 		// For now you must always place all three pins.
 		if (!this.startPin) {
-			this.startPin = scaledCoord;
+			this.startPin = coordinatePair;
 			pinImageSrc = startPinImport;
 		} else if (!this.middlePin) {
-			this.middlePin = scaledCoord;
+			this.middlePin = coordinatePair;
 			pinImageSrc = middlePinImport;
 		} else if (!this.endPin) {
-			this.endPin = scaledCoord;
+			this.endPin = coordinatePair;
 			pinImageSrc = endPinImport;
 		} else {
 			this.transitionToResults();
@@ -106,23 +113,10 @@ export class PinMap extends React.Component<PinMapProp, any> {
 			return;
 
 		let context = current.getContext('2d');
-		let pinImage = new Image();
-		pinImage.src = pinImageSrc;
-		pinImage.onload = function() {
-			if (context) {
-				const image_width = 30;
-				const image_height = 40;
+		if (!context)
+			return;
 
-				const rect = context.canvas.getBoundingClientRect();
-				const x = coord.x - rect.left - (image_width / 2);
-				const y = coord.y - rect.top - image_height;
-
-				context.drawImage(pinImage, x, y, image_width, image_height);
-			}
-		}
-		pinImage.onerror = function() {
-			console.log("pinImage onerror", this.src);
-		}
+		CanvasUtil.displayPin(context, coord, pinImageSrc);
 	}
 
 	render = () => {
