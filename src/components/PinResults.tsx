@@ -1,9 +1,9 @@
-import React, { MouseEvent } from 'react';
+import React from 'react';
 import './PinMap.css';
 import startPinImport from "../images/start pin.png"
 import middlePinImport from "../images/inbetween pin.png"
 import endPinImport from "../images/end pin.png"
-import {AppStateAccessor, PinType, Pin, ResultSet, Coordinate} from "../Interfaces"
+import {AppStateAccessor, PinType, Pin} from "../Interfaces"
 import CanvasUtil from "../CanvasUtil";
 
 export interface PinResultsProp extends AppStateAccessor {

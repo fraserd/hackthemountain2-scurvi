@@ -1,4 +1,4 @@
-import React, {HTMLAttributes} from "react";
+import React from "react";
 import {BoatBase, BoatSpeeds} from "../Ships"
 import barquentine from "../images/barquentine.png"
 import frigate from "../images/frigate.png"
