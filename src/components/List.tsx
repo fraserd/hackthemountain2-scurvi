@@ -13,17 +13,10 @@ interface ListProperties<T> {
 }
 
 class ListItem<T> extends React.Component<ListItemProperties<T>, any> {
-  constructor(props: ListItemProperties<T>) {
-    super(props);
-  }
-
   render = () => this.props.factory(this.props.item)
 }
 
 export default class List<T> extends React.Component<ListProperties<T>, any> {
-  constructor(props: ListProperties<T>) {
-    super(props);
-  }
 
   render = () => {
     let listItems: JSX.Element[] = [];

@@ -9,9 +9,6 @@ interface ClickEventHandler {
 }
 
 export default class Boat extends React.Component<BoatBase & ClickEventHandler, any> {
-  constructor(props: BoatBase & ClickEventHandler) {
-    super(props)
-  }
 
   image = (sprite: keyof typeof BoatSpeeds): string => {
     switch (sprite) {

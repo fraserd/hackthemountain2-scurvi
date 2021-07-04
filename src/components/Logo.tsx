@@ -7,9 +7,6 @@ interface LogoProperties {
 }
 
 export default class Logo extends React.Component<LogoProperties, any> {
-  constructor(props: LogoProperties) {
-    super(props);
-  }
   render = () => {
     return (
       <img className={this.props.small ? "small" : ""} src={logo} alt="scurvi logo"/>

@@ -24,9 +24,6 @@ interface Dimensions {
 }
 
 export default class Pane extends React.Component<PaneProperties, any> {
-  constructor(props: PaneProperties) {
-    super(props);
-  }
 
   render = () => {
     let style: PaneProperties = {
